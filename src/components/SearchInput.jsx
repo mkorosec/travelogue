@@ -47,13 +47,13 @@ export default function SearchInput({ onSelect }) {
   }
 
   const statusColor = (status) =>
-    status === STATUS.VISITED ? "#34d399" :
-    status === STATUS.WANT ? "#fbbf24" : "#64748b"
+    status === STATUS.VISITED ? "var(--color-travel-visited-text)" :
+    status === STATUS.WANT ? "var(--color-travel-want-text)" : "var(--color-travel-text-lo)"
 
   return (
     <div className="relative">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -63,26 +63,27 @@ export default function SearchInput({ onSelect }) {
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
           placeholder="Search countries..."
-          className="w-full pl-9 pr-8 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none transition-all focus:border-emerald-500/50 focus:bg-slate-800/80 focus:ring-2 focus:ring-emerald-500/10"
+          className="w-full pl-9 pr-9 py-3 bg-[var(--color-travel-border)] border border-[var(--color-travel-border-hi)] rounded-xl text-sm text-white placeholder-slate-500 outline-none transition-all focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10"
         />
         {query && (
           <button
             onClick={() => setQuery("")}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded-md hover:bg-slate-700/50 text-slate-500 hover:text-slate-300 transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg hover:bg-[var(--color-travel-surface-hi)] text-slate-500 hover:text-slate-300 transition-colors"
+            aria-label="Clear search"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
       {focused && results.length > 0 && (
-        <div className="absolute top-full mt-1.5 left-0 right-0 bg-slate-800 border border-slate-700/50 rounded-xl overflow-hidden shadow-2xl shadow-black/30 z-50 backdrop-blur-xl">
+        <div className="absolute top-full mt-1.5 left-0 right-0 bg-[var(--color-travel-surface)] border border-[var(--color-travel-border)] rounded-xl overflow-hidden shadow-2xl shadow-black/30 z-50">
           {results.map((item, i) => (
             <button
               key={item.code}
               onMouseDown={() => handleSelect(item)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors ${
-                i === selectedIdx ? "bg-slate-700/60" : "hover:bg-slate-800/60"
+              className={`w-full flex items-center gap-3 px-3 py-3 text-left text-sm transition-colors min-h-[44px] ${
+                i === selectedIdx ? "bg-[var(--color-travel-surface-hi)]" : "hover:bg-[var(--color-travel-surface-hi)]/60"
               }`}
             >
               <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: statusColor(item.status) }} />

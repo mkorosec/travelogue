@@ -3,33 +3,51 @@
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  --color-travel-bg: #0b1121;
+  --color-travel-surface: #111827;
+  --color-travel-surface-hi: #1e293b;
+  --color-travel-border: #1e293b;
+  --color-travel-border-hi: #334155;
+  --color-travel-text: #94a3b8;
+  --color-travel-text-hi: #e2e8f0;
+  --color-travel-text-lo: #64748b;
+  --color-travel-visited: #059669;
+  --color-travel-visited-text: #34d399;
+  --color-travel-want: #d97706;
+  --color-travel-want-text: #fbbf24;
+  --color-travel-unvisited: #1e293b;
+  --color-travel-accent: #10b981;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #334155 transparent;
+  scrollbar-color: var(--color-travel-border-hi) transparent;
 }
 
 body {
   margin: 0;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: var(--color-travel-bg);
+  color: var(--color-travel-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+/* Responsive breakpoints */
+@media (max-width: 767px) {
+  .sidebar-desktop { display: none !important; }
+  .map-mobile { border-radius: 0 !important; border: none !important; }
 }
 
-@keyframes fill-progress {
-  from { stroke-dashoffset: var(--progress-offset); }
+@media (min-width: 768px) {
+  .sidebar-mobile { display: none !important; }
+  .mobile-toggle { display: none !important; }
 }

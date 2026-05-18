@@ -33,17 +33,17 @@ export default function CountryList() {
   return (
     <div className="space-y-3">
       <div className="relative">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Filter..."
-          className="w-full pl-8 pr-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-xs text-white placeholder-slate-500 outline-none focus:border-slate-600 transition-all"
+          placeholder="Filter countries..."
+          className="w-full pl-9 pr-3 py-2.5 bg-[var(--color-travel-border)] border border-[var(--color-travel-border-hi)] rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10 transition-all"
         />
       </div>
 
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1.5">
         <FilterChip active={filter === "all"} onClick={() => setFilter("all")} label="All" count={counts.all} />
         <FilterChip active={filter === "visited"} onClick={() => setFilter("visited")} label="Visited" count={counts.visited} color="emerald" />
         <FilterChip active={filter === "want"} onClick={() => setFilter("want")} label="Want" count={counts.want} color="amber" />
@@ -53,7 +53,7 @@ export default function CountryList() {
         ))}
       </div>
 
-      <div className="space-y-0.5 max-h-[calc(100vh-320px)] overflow-y-auto pr-0.5">
+      <div className="space-y-0.5 max-h-[50vh] overflow-y-auto pr-0.5">
         <AnimatePresence>
           {filtered.map(([code, name]) => {
             const status = getStatus(code)
@@ -63,7 +63,7 @@ export default function CountryList() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
                 className="overflow-hidden"
               >
                 <CountryRow code={code} name={name} status={status} />
@@ -72,7 +72,7 @@ export default function CountryList() {
           })}
         </AnimatePresence>
         {filtered.length === 0 && (
-          <p className="text-sm text-slate-600 text-center py-8">No countries found</p>
+          <p className="text-sm text-slate-600 text-center py-10">No countries match</p>
         )}
       </div>
     </div>
@@ -83,15 +83,15 @@ function CountryRow({ code, name, status }) {
   const { toggle } = useTravel()
 
   const icon = status === STATUS.VISITED
-    ? <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+    ? <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
     : status === STATUS.WANT
-    ? <Heart className="w-4 h-4 text-amber-400" />
-    : <Circle className="w-4 h-4 text-slate-600" />
+    ? <Heart className="w-4 h-4 text-amber-400 flex-shrink-0" />
+    : <Circle className="w-4 h-4 text-slate-600 flex-shrink-0" />
 
   return (
     <button
       onClick={() => toggle(code)}
-      className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg hover:bg-slate-800/50 transition-colors text-left group"
+      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-[var(--color-travel-surface-hi)] transition-colors text-left group min-h-[44px]"
     >
       {icon}
       <span className={`text-sm flex-1 truncate ${
@@ -109,16 +109,16 @@ function FilterChip({ active, onClick, label, count }) {
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+      className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors min-h-[34px] ${
         active
-          ? "bg-slate-700 text-white"
-          : "bg-slate-800/40 text-slate-500 hover:text-slate-300 hover:bg-slate-800"
+          ? "bg-[var(--color-travel-border-hi)] text-white"
+          : "bg-[var(--color-travel-surface-hi)] text-slate-500 hover:text-slate-300 hover:bg-[var(--color-travel-border)]"
       }`}
     >
       {label}
       {count !== null && (
         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-          active ? "bg-slate-600 text-slate-200" : "bg-slate-800 text-slate-500"
+          active ? "bg-[var(--color-travel-surface)] text-slate-200" : "bg-[var(--color-travel-bg)] text-slate-500"
         }`}>
           {count}
         </span>
