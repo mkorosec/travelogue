@@ -53,7 +53,7 @@ export default function SearchInput({ onSelect }) {
   return (
     <div className="relative">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-travel-text-lo)] pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -63,12 +63,12 @@ export default function SearchInput({ onSelect }) {
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
           placeholder="Search countries..."
-          className="w-full pl-9 pr-9 py-3 bg-[var(--color-travel-border)] border border-[var(--color-travel-border-hi)] rounded-xl text-sm text-white placeholder-slate-500 outline-none transition-all focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10"
+          className="w-full pl-9 pr-9 py-3 bg-[var(--color-travel-border)] border border-[var(--color-travel-border-hi)] rounded-xl text-sm text-[var(--color-travel-text-hi)] placeholder-[var(--color-travel-text-lo)] outline-none transition-all focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10"
         />
         {query && (
           <button
             onClick={() => setQuery("")}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg hover:bg-[var(--color-travel-surface-hi)] text-slate-500 hover:text-slate-300 transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg hover:bg-[var(--color-travel-surface-hi)] text-[var(--color-travel-text-lo)] hover:text-[var(--color-travel-text)] transition-colors"
             aria-label="Clear search"
           >
             <X className="w-4 h-4" />
@@ -87,7 +87,7 @@ export default function SearchInput({ onSelect }) {
               }`}
             >
               <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: statusColor(item.status) }} />
-              <span className="font-medium text-slate-200">{item.name}</span>
+              <span className="font-medium text-[var(--color-travel-text-hi)]">{item.name}</span>
               <span className="text-xs ml-auto flex-shrink-0" style={{ color: statusColor(item.status) }}>
                 {item.status === STATUS.VISITED ? "Visited" :
                  item.status === STATUS.WANT ? "Want to go" : "Not visited"}

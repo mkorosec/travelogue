@@ -4,6 +4,29 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 
+  --color-travel-visited: #059669;
+  --color-travel-visited-text: #34d399;
+  --color-travel-want: #d97706;
+  --color-travel-want-text: #fbbf24;
+  --color-travel-accent: #10b981;
+}
+
+:root {
+  --color-travel-bg: #f8fafc;
+  --color-travel-surface: #ffffff;
+  --color-travel-surface-hi: #f1f5f9;
+  --color-travel-border: #e2e8f0;
+  --color-travel-border-hi: #cbd5e1;
+  --color-travel-text: #475569;
+  --color-travel-text-hi: #1e293b;
+  --color-travel-text-lo: #94a3b8;
+  --color-travel-unvisited: #e2e8f0;
+  --color-travel-visited-text: #059669;
+  --color-travel-want-text: #b45309;
+  color-scheme: light;
+}
+
+.dark {
   --color-travel-bg: #0b1121;
   --color-travel-surface: #111827;
   --color-travel-surface-hi: #1e293b;
@@ -12,12 +35,10 @@
   --color-travel-text: #94a3b8;
   --color-travel-text-hi: #e2e8f0;
   --color-travel-text-lo: #64748b;
-  --color-travel-visited: #059669;
-  --color-travel-visited-text: #34d399;
-  --color-travel-want: #d97706;
-  --color-travel-want-text: #fbbf24;
   --color-travel-unvisited: #1e293b;
-  --color-travel-accent: #10b981;
+  --color-travel-visited-text: #34d399;
+  --color-travel-want-text: #fbbf24;
+  color-scheme: dark;
 }
 
 * {
@@ -35,10 +56,59 @@ body {
   overflow: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(148,163,184,0.15) 0px, transparent 1px),
+    radial-gradient(circle at 85% 12%, rgba(148,163,184,0.12) 0px, transparent 1px),
+    radial-gradient(circle at 32% 25%, rgba(148,163,184,0.1) 0px, transparent 1px),
+    radial-gradient(circle at 65% 18%, rgba(148,163,184,0.13) 0px, transparent 1px),
+    radial-gradient(circle at 8% 42%, rgba(148,163,184,0.08) 0px, transparent 1px),
+    radial-gradient(circle at 78% 35%, rgba(148,163,184,0.1) 0px, transparent 1px),
+    radial-gradient(circle at 45% 55%, rgba(148,163,184,0.09) 0px, transparent 1px),
+    radial-gradient(circle at 22% 68%, rgba(148,163,184,0.12) 0px, transparent 1px),
+    radial-gradient(circle at 92% 58%, rgba(148,163,184,0.07) 0px, transparent 1px),
+    radial-gradient(circle at 55% 78%, rgba(148,163,184,0.1) 0px, transparent 1px),
+    radial-gradient(circle at 70% 88%, rgba(148,163,184,0.08) 0px, transparent 1px),
+    radial-gradient(circle at 38% 90%, rgba(148,163,184,0.06) 0px, transparent 1px),
+    radial-gradient(circle at 15% 82%, rgba(148,163,184,0.1) 0px, transparent 1px);
+  background-size: 280px 280px;
+}
+
+.dark body::before {
+  opacity: 0.5;
+}
+
+html.light body::before,
+html:not(.dark) body::before {
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(100,116,139,0.08) 0px, transparent 1px),
+    radial-gradient(circle at 85% 12%, rgba(100,116,139,0.06) 0px, transparent 1px),
+    radial-gradient(circle at 32% 25%, rgba(100,116,139,0.05) 0px, transparent 1px),
+    radial-gradient(circle at 65% 18%, rgba(100,116,139,0.07) 0px, transparent 1px),
+    radial-gradient(circle at 8% 42%, rgba(100,116,139,0.04) 0px, transparent 1px),
+    radial-gradient(circle at 78% 35%, rgba(100,116,139,0.05) 0px, transparent 1px),
+    radial-gradient(circle at 45% 55%, rgba(100,116,139,0.04) 0px, transparent 1px),
+    radial-gradient(circle at 22% 68%, rgba(100,116,139,0.06) 0px, transparent 1px),
+    radial-gradient(circle at 92% 58%, rgba(100,116,139,0.03) 0px, transparent 1px),
+    radial-gradient(circle at 55% 78%, rgba(100,116,139,0.05) 0px, transparent 1px),
+    radial-gradient(circle at 70% 88%, rgba(100,116,139,0.04) 0px, transparent 1px),
+    radial-gradient(circle at 38% 90%, rgba(100,116,139,0.03) 0px, transparent 1px),
+    radial-gradient(circle at 15% 82%, rgba(100,116,139,0.05) 0px, transparent 1px);
+  opacity: 0.6;
+}
+
 #root {
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 /* Responsive breakpoints */
@@ -50,4 +120,8 @@ body {
 @media (min-width: 768px) {
   .sidebar-mobile { display: none !important; }
   .mobile-toggle { display: none !important; }
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

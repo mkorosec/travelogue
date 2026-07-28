@@ -43,20 +43,20 @@ export default function ShareBanner() {
           <Eye className="w-4 h-4 text-emerald-400" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-white">
+          <p className="text-sm font-semibold text-[var(--color-travel-text-hi)]">
             Viewing a shared map
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--color-travel-text-lo)]">
             {sharedVisited > 0 && (
               <span className="text-emerald-400 font-medium">{sharedVisited} visited</span>
             )}
             {sharedVisited > 0 && sharedWant > 0 && (
-              <span className="text-slate-600"> · </span>
+              <span className="text-[var(--color-travel-text-lo)]"> · </span>
             )}
             {sharedWant > 0 && (
               <span className="text-amber-400 font-medium">{sharedWant} want to go</span>
             )}
-            <span className="text-slate-600"> · </span>
+            <span className="text-[var(--color-travel-text-lo)]"> · </span>
             <span className="hidden sm:inline">Your own data is preserved</span>
           </p>
         </div>
@@ -75,7 +75,7 @@ export default function ShareBanner() {
           )}
           <button
             onClick={handleDismiss}
-            className="p-2 rounded-lg hover:bg-[var(--color-travel-surface-hi)] text-slate-500 hover:text-slate-300 transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--color-travel-surface-hi)] text-[var(--color-travel-text-lo)] hover:text-[var(--color-travel-text)] transition-colors"
             aria-label="Dismiss shared map"
           >
             <X className="w-4 h-4" />

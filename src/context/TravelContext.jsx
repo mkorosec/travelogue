@@ -1,7 +1,8 @@
-import { createContext, useReducer, useCallback } from "react"
+import { createContext, useReducer, useCallback, useEffect, useRef, useState } from "react"
 import { STATUS, COUNTRY_CONTINENT, TOTAL_COUNTRIES } from "../data/countries"
 
 const STORAGE_KEY = "travelogue_data"
+const MILESTONES = [1, 5, 10, 25, 50, 75, 100, 150, 195]
 
 function loadState() {
   try {
@@ -85,6 +86,8 @@ export { TravelContext }
 
 export function TravelProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, loadState)
+  const [milestone, setMilestone] = useState(null)
+  const prevCount = useRef(state.visited.size)
 
   const toggle = useCallback((code) => dispatch({ type: "TOGGLE", code }), [])
   const setVisited = useCallback((codes) => dispatch({ type: "SET_VISITED", codes }), [])
@@ -108,14 +111,39 @@ export function TravelProvider({ children }) {
     if (state.wantToGo.has(code)) continentStats[cont].want++
   }
 
+  const visitedCount = state.visited.size
+  const totalCountries = TOTAL_COUNTRIES
+  const progress = totalCountries > 0 ? (visitedCount / totalCountries) * 100 : 0
+
+  useEffect(() => {
+    if (visitedCount > 0) {
+      document.title = `Travelogue — ${visitedCount} ${visitedCount === 1 ? "country" : "countries"} (${Math.round(progress)}%)`
+    } else {
+      document.title = "Travelogue — track your travels"
+    }
+
+    const was = prevCount.current
+    if (visitedCount > was) {
+      const hit = MILESTONES.find((m) => m > was && m <= visitedCount)
+      if (hit) {
+        setMilestone({ count: hit, progress: Math.round((hit / totalCountries) * 100) })
+      }
+    }
+    prevCount.current = visitedCount
+  }, [visitedCount, progress, totalCountries])
+
+  const dismissMilestone = useCallback(() => setMilestone(null), [])
+
   const value = {
     visited: state.visited,
     wantToGo: state.wantToGo,
-    visitedCount: state.visited.size,
+    visitedCount,
     wantCount: state.wantToGo.size,
-    totalCountries: TOTAL_COUNTRIES,
-    progress: TOTAL_COUNTRIES > 0 ? (state.visited.size / TOTAL_COUNTRIES) * 100 : 0,
+    totalCountries,
+    progress,
     continentStats,
+    milestone,
+    dismissMilestone,
     toggle,
     setVisited,
     setWant,
